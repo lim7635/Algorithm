@@ -25,6 +25,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Class9th (Merge Sort)", "..
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Class10th (Union Find)", "..\Class10th (Union Find)\Class10th (Union Find).vcxproj", "{CF8C1E76-EA79-4313-B19D-E4A5AB421016}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Class11th (Kruskal Algorithm)", "..\Class11th (Kruskal Algorithm)\Class11th (Kruskal Algorithm).vcxproj", "{45235600-1C56-4F43-A3DE-D8E78B0D8B55}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -121,6 +123,14 @@ Global
 		{CF8C1E76-EA79-4313-B19D-E4A5AB421016}.Release|x64.Build.0 = Release|x64
 		{CF8C1E76-EA79-4313-B19D-E4A5AB421016}.Release|x86.ActiveCfg = Release|Win32
 		{CF8C1E76-EA79-4313-B19D-E4A5AB421016}.Release|x86.Build.0 = Release|Win32
+		{45235600-1C56-4F43-A3DE-D8E78B0D8B55}.Debug|x64.ActiveCfg = Debug|x64
+		{45235600-1C56-4F43-A3DE-D8E78B0D8B55}.Debug|x64.Build.0 = Debug|x64
+		{45235600-1C56-4F43-A3DE-D8E78B0D8B55}.Debug|x86.ActiveCfg = Debug|Win32
+		{45235600-1C56-4F43-A3DE-D8E78B0D8B55}.Debug|x86.Build.0 = Debug|Win32
+		{45235600-1C56-4F43-A3DE-D8E78B0D8B55}.Release|x64.ActiveCfg = Release|x64
+		{45235600-1C56-4F43-A3DE-D8E78B0D8B55}.Release|x64.Build.0 = Release|x64
+		{45235600-1C56-4F43-A3DE-D8E78B0D8B55}.Release|x86.ActiveCfg = Release|Win32
+		{45235600-1C56-4F43-A3DE-D8E78B0D8B55}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
