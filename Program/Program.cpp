@@ -1,52 +1,108 @@
 ﻿#include <iostream>
+#include <vector>
+#include <queue>
+#define SIZE 8
 using namespace std;
+
+class Graph
+{
+private:
+	vector<int> edge[SIZE];
+
+	int inDegree[SIZE];
+
+public:
+	Graph()
+	{
+		for (int i = 0; i < SIZE; i++)
+		{
+			inDegree[i] = 0;
+		}
+	}
+
+	void ConnectEdge(int x, int y)
+	{
+		edge[x].push_back(y);
+		inDegree[y]++;
+	}
+
+	void Sort()
+	{
+		queue<int> queue;
+		for (int i = 1; i < SIZE; i++)
+		{
+			if (inDegree[i] == 0)
+			{
+				queue.push(i);
+			}
+		}
+
+		for(int i = 1; i < SIZE; i++)
+		{
+			if (queue.empty() == true)
+			{
+				break;
+			}
+
+			int x = queue.front();
+
+			queue.pop();
+
+			cout << x << " ";
+
+			for (int j = 0; j < edge[x].size(); j++)
+			{
+				int y = edge[x][j];
+
+				inDegree[y]--;
+
+				if (inDegree[y] <= 0)
+				{
+					queue.push(y);
+				}
+			}
+		}
+	}
+
+};
 
 int main()
 {
-#pragma region 탐욕법(Greedy)
-	// 최적의 해를 구하는 데 사용되는 근사적인 방법으로
-	// 여러 경우 중 하나를 결정해야 할 때마다
-	// 그 순간에 최적이라고 생각되는 것을 선택해 나가는 방식으로 진행하여
-	// 최종적인 해답을 구하는 알고리즘입니다.
+#pragma region 위상 정렬(Topological Sorting)
+	// 방향 그래프에 존재하는 각 정점들의 선행 순서를 지키며
+	// 모든 정점을 차례대로 진행하는 알고리즘입니다.
 
-	// 1. 탐욕 선택 속성
-	// 각 단계에서 '최선의 선택'을 했을 때 전체 문제에 대한 최적의 해를 구할 수 있는 경우입니다.
+	// 사이클이 발생하는 경우 위상 정렬을 수행할 수 없습니다.
 
-	// 2. 최적 부분 구조
-	// 전체 문제의 최적의 해가 '부분 문제의 최적의 해로 구성'될 수 있는 경우입니다.
+	// DAG(Directed Acyclic Graph) : 사이클이 존재하지 않는 그래프
+	// 시간 복잡도 : O(V + E)
 
-	// 그리디 알고리즘의 단계
-	// 1. 문제의 최적해 구조를 결정합니다.
+	// 위상 정렬
+	// 1. 진입 차수가 0인 정저을 Queue에 삽입한다.
+
+	// 2. Queue에서 원소를 꺼내 연결된 모든 간선을 제거합니다.
+
+	// 3. 간선 제거 이후에 진입 차수가 0이 된 정점을 Queue에 삽입합니다.
+
+	// 4. Queue가 비어있을 때까지 2번 ~ 3번을 반복 수행합니다.
+
+	Graph graph;
 	
-	// 2. 문제의 구조에 맞게 선택 절차를 정의합니다.
-	
-	// 3. 선택 절차에 따라 선택을 수행합니다.
-	
-	// 4. 선택된 해가 문제의 조건을 만족하는지 검사합니다.
-	
-	// 5. 조건을 만족하지 않으면 해당 해를 제외합니다.
-	
-	// 6. 모든 선택이 완료되면 해답을 검사합니다.
-	
-	// 7. 조건을 만족하지 않으면 해답으로 인정되지 않습니다.
+	graph.ConnectEdge(1, 2);
+	graph.ConnectEdge(1, 5);
 
-	int money = 1230;
+	graph.ConnectEdge(2, 3);
 
-	int coin[4] = { 500, 100, 50, 10 };
+	graph.ConnectEdge(3, 4);
+	graph.ConnectEdge(3, 5);
 
-	int count = 0;
+	graph.ConnectEdge(4, 6);
 
-	int i = 0;
-	while (i < 4)
-	{
-		if (coin[i] <= money)
-		{
-			count += money / coin[i];
-			money = money % coin[i];
-		}
-		i++;
-	}
-	cout << "사용된 동전 개수 : " << count << endl;
+	graph.ConnectEdge(5, 6);
+
+	graph.ConnectEdge(6, 7);
+
+	graph.Sort();
 
 #pragma endregion
 
