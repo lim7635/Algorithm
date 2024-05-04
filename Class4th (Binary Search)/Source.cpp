@@ -25,7 +25,7 @@ void BinarySearch(int list[], int key)
 			right = pivot - 1;
 		}
 
-		// 4. list[pivot]의 값이 찾고자하는 값보다 크다면 right ~ pivot 사이의 값을 검색합니다.
+		// 4. list[pivot]의 값이 찾고자하는 값보다 작다면 right ~ pivot 사이의 값을 검색합니다.
 		else if (list[pivot] < key)
 		{
 			left = pivot + 1;
@@ -56,7 +56,7 @@ int main()
 #pragma endregion
 
 #pragma region 개방 폐쇄 원칙(Open Closed Principle) OCP
-	// 클래스는 확장에 대해서는 열러 있어야 하지만 수정에 대해서는 닫혀 있어야 합니다.
+	// 클래스는 확장에 대해서는 열려 있어야 하지만 수정에 대해서는 닫혀 있어야 합니다.
 
 #pragma endregion
 

@@ -152,6 +152,11 @@ int main()
 	// 최소 신장 트리(Minimum Spanning Tree, MST)
 	// 그래프의 간선들의 가중치 합이 최소인 신장 트리
 
+	// 크루스칼 알고리즘(Kruskal Algorithm)
+	// 간선의 가중치를 기준으로 오름차순으로 정렬 후
+	// 간선 연결 시 사이클이 생기지 않는다면 추가하는 방식
+	// 간선의 개수가 적을 때 사용
+
 	Graph graph;
 
 	graph.CreateEdge(1, 2, 15);
