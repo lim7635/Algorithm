@@ -1,92 +1,103 @@
 ﻿#include <iostream>
 #include <queue>
-#include <algorithm>
-#include <string>
+#include <vector>
 #define SIZE 7
-#define INF 10000
 using namespace std;
-
-//class Graph
-//{
-//private:
-//	int weight[SIZE][SIZE];
-//
-//	int sum;
-//
-//public:
-//	Graph()
-//	{
-//		sum = 0;
-//
-//		for (int i = 0; i < SIZE; i++)
-//		{
-//			for (int j = 0; j < SIZE; j++)
-//			{
-//				if (i == j)
-//				{
-//					weight[i][j] = 0;
-//				}
-//				else
-//				{
-//					weight[i][j] = INF;
-//				}
-//			}
-//		}
-//	}
-//
-//	void CreateEdge(int x, int y, int count)
-//	{
-//		weight[x][y] = count;
-//		weight[y][x] = count;
-//	}
-//	
-//	void Prim()
-//	{
-//
-//	}
-//
-//	int& Cost()
-//	{
-//		return sum;
-//	}
-//
-//};
-
-class Fruit
-{
-private:
-	string name;
-	int price;
-
-public:
-	Fruit(string name, int price)
-	{
-		this->name = name;
-		this->price = price;
-	}
-
-	int Price()
-	{
-		return price;
-	}
-
-	string Name()
-	{
-		return name;
-	}
-
-	bool operator<(Fruit& a)
-	{
-		return this->price < a.price;
-	}
-};
 
 struct cmp
 {
-	bool operator()(Fruit a, Fruit b)
+	bool operator() (pair<int, int> a, pair<int, int> b)
 	{
-		return a.Price() > b.Price();
+		return a.second > b.second; // 오른쪽 int 값을 기준으로 오름차순으로 정렬
 	}
+};
+
+class Graph
+{
+private:
+	int sum;
+
+	bool visited[SIZE];
+
+	// 임의의 정점과 연결된 모든 정점과 간선의 가중치를 추가하는 2차원 배열(왼쪽 : 연결된 정점, 오른쪽 : 가중치)
+	vector<pair<int, int>> distance[SIZE];
+
+	// 구조체 cmp를 통해 간선의 가중치 기준 오름차순으로 정렬되어 있는 우선순위 큐
+	priority_queue<pair<int, int>, vector<pair<int, int>>, cmp> edgeList;
+
+public:
+	Graph()
+	{
+		sum = 0;
+
+		for (int i = 0; i < SIZE; i++)
+		{
+			visited[i] = false;
+		}
+	}
+
+	// 간선 연결 함수
+	void CreateEdge(int x, int y, int weight)
+	{
+		// 무방향 그래프이기 때문에 양쪽 모두 값 추가
+		distance[x].push_back(make_pair(y, weight));
+		distance[y].push_back(make_pair(x, weight));
+	}
+
+	void Prim(int x)
+	{
+		visited[x] = true;
+
+		// 임의의 정점 선택 후 정점과 연결된 모든 정점과 간선의 가중치를 큐에 추가 (임의의 정점 : x로 정의)
+		for (int i = 0; i < distance[x].size(); i++)
+		{
+			edgeList.push(distance[x][i]);
+		}
+
+		int i = 1;
+		// 정점의 개수 - 1회만큼 반복
+		while (i < SIZE - 1)
+		{
+
+			// 정점과 연결된 간선들 중 가중치 최솟값
+			int weight = edgeList.top().second;
+
+			// 가중치 최솟값인 간선이 연결된 정점
+			int next = edgeList.top().first;
+
+			edgeList.pop();
+
+			// 만약 방문했다면 위에서부터 다시 진행
+			if (visited[next] == true)
+			{
+				continue;
+			}
+			// 방문하지 않았다면 next를 방문 처리 후 가중치를 더함
+			else
+			{
+				visited[next] = true;
+				sum += weight;
+			}
+
+			// next와 연결된 모든 정점 탐색
+			for (int j = 0; j < distance[next].size(); j++)
+			{
+				// 방문하지 않았다면 해당 값을 큐에 추가
+				if (visited[distance[next][j].first] == false)
+				{
+					edgeList.push(distance[next][j]);
+				}
+			}
+
+			i++;
+		}
+	}
+
+	int& Cost()
+	{
+		return sum;
+	}
+
 };
 
 int main()
@@ -104,7 +115,7 @@ int main()
 	// 선택된 모든 정점을 큐에 추가 후 위 과정을 반복
 	// 간선의 개수가 많을 때 사용
 
-	/*Graph graph;
+	Graph graph;
 
 	graph.CreateEdge(1, 2, 15);
 	graph.CreateEdge(1, 3, 5);
@@ -115,31 +126,11 @@ int main()
 	graph.CreateEdge(4, 6, 28);
 	graph.CreateEdge(5, 6, 31);
 
-	graph.Prim();
+	graph.Prim(1);
 
-	cout << "graph의 최소 비용 : " << graph.Cost() << endl;*/
+	cout << "graph의 최소 비용 : " << graph.Cost() << endl;
 
 #pragma endregion
-
-#pragma region 우선순위 큐
-	// 가장 큰 값이 Top을 유지하도록 우선순위가 설계되어 있는 컨테이너 어댑터
-
-	priority_queue<Fruit, vector<Fruit>, cmp> pq;
-
-	Fruit fruit1("Apple", 5000);
-	Fruit fruit2("Banana", 4500);
-	Fruit fruit3("Pear", 6000);
-
-	pq.push(fruit1);
-	pq.push(fruit2);
-	pq.push(fruit3);
-
-	while (pq.empty() == false)
-	{
-		Fruit A = pq.top();
-		cout << A.Name() << " " << A.Price() << endl;
-		pq.pop();
-	}
 
 #pragma endregion
 
