@@ -44,7 +44,7 @@ public:
 		distance[y].push_back(make_pair(x, weight));
 	}
 
-	void Prim(int x)
+	void Prim(int x, int vertex)
 	{
 		visited[x] = true;
 
@@ -54,9 +54,9 @@ public:
 			edgeList.push(distance[x][i]);
 		}
 
-		int i = 1;
+		int i = 0;
 		// 정점의 개수 - 1회만큼 반복
-		while (i < SIZE - 1)
+		while (i < vertex - 1)
 		{
 
 			// 정점과 연결된 간선들 중 가중치 최솟값
@@ -126,7 +126,7 @@ int main()
 	graph.CreateEdge(4, 6, 28);
 	graph.CreateEdge(5, 6, 31);
 
-	graph.Prim(1);
+	graph.Prim(1, 6);
 
 	cout << "graph의 최소 비용 : " << graph.Cost() << endl;
 

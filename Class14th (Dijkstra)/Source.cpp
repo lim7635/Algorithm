@@ -1,6 +1,6 @@
 ﻿#include <iostream>
 #include <limits.h>
-#define INFINITY 10000
+#define INF 10000
 #define SIZE 5
 using namespace std;
 
@@ -11,18 +11,7 @@ private:
 
 	int distance[SIZE];
 
-	int weight[SIZE][SIZE] =
-	{
-		{0,7,4,6,1},
-		{INFINITY,0,INFINITY,INFINITY,INFINITY},
-		{INFINITY,2,0,5,INFINITY},
-		{INFINITY,3,INFINITY,0,INFINITY},
-		{INFINITY,INFINITY,INFINITY,1,0}
-	};
-
-	int x;
-
-	int y;
+	int weight[SIZE][SIZE];
 
 public:
 	Graph()
@@ -31,6 +20,17 @@ public:
 		{
 			visited[i] = false;
 			distance[i] = 0;
+			for (int j = 0; j < SIZE; j++)
+			{
+				if (i == j)
+				{
+					weight[i][j] = 0;
+				}
+				else
+				{
+					weight[i][j] = INF;
+				}
+			}
 		}
 	}
 
@@ -42,7 +42,7 @@ public:
 	// 최소 비용 노드를 탐색하는 함수
 	int SmallNode()
 	{
-		int min = INFINITY;
+		int min = INF;
 		int minPosition = 0;
 		for (int i = 0; i < SIZE; i++)
 		{
@@ -98,7 +98,7 @@ public:
 int main()
 {
 #pragma region 다익스트라 알고리즘(Dijkstra)
-	// 시작점으로부터 모든 노드까지의 최소 거리를 구해주는 알고리즘입니다.
+	// 시작점으로부터 모든 노드까지의 최소 거리를 구해주는 알고리즘입니다.(그리디 알고리즘)
 
 	// 1. distance 배열을 weight[시작점 노드]의 값들로 초기화 시켜줍니다.
 
@@ -116,6 +116,15 @@ int main()
 	// 그 노드와 연결된 다른 노드까지의 거리를 계산합니다.
 
 	Graph graph;
+
+	graph.CreateEdge(0, 1, 7);
+	graph.CreateEdge(0, 2, 4);
+	graph.CreateEdge(0, 3, 6);
+	graph.CreateEdge(0, 4, 1);
+	graph.CreateEdge(2, 1, 2);
+	graph.CreateEdge(2, 3, 5);
+	graph.CreateEdge(3, 1, 3);
+	graph.CreateEdge(4, 3, 1);
 
 	graph.Dijkstra(0);
 
